@@ -1,6 +1,41 @@
 export default function componentStyleOverrides(theme) {
     const bgColor = theme.colors?.grey50;
     return {
+        EditorDraft: {
+            styleOverrides: {
+                root: {
+                    background: bgColor,
+                    borderRadius: `${theme?.customization?.borderRadius}px`,
+                    '& .MuiOutlinedInput-notchedOutline': {
+                        borderColor: theme.colors?.grey400
+                    },
+                    '&:hover $notchedOutline': {
+                        borderColor: theme.colors?.primaryLight
+                    },
+                    '&.MuiInputBase-multiline': {
+                        padding: 1
+                    }
+                },
+                input: {
+                    fontWeight: 500,
+                    background: bgColor,
+                    padding: '15.5px 14px',
+                    borderRadius: `${theme?.customization?.borderRadius}px`,
+                    '&.MuiInputBase-inputSizeSmall': {
+                        padding: '10px 14px',
+                        '&.MuiInputBase-inputAdornedStart': {
+                            paddingLeft: 0
+                        }
+                    }
+                },
+                inputAdornedStart: {
+                    paddingLeft: 4
+                },
+                notchedOutline: {
+                    borderRadius: `${theme?.customization?.borderRadius}px`
+                }
+            }
+        },
         MuiButton: {
             styleOverrides: {
                 root: {

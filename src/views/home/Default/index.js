@@ -1,7 +1,9 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
+import { useTheme } from '@mui/material/styles';
 
 const Default = () => {
-    return <div>Default</div>;
+    return <>Hello</>;
 };
 
 export default Default;

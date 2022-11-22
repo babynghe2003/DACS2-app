@@ -131,8 +131,8 @@ const FirebaseLogin = ({ ...others }) => {
 
             <Formik
                 initialValues={{
-                    email: 'info@codedthemes.com',
-                    password: '123456',
+                    email: '',
+                    password: '',
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
@@ -155,6 +155,7 @@ const FirebaseLogin = ({ ...others }) => {
                                 refreshToken: res.data.user.refresh,
                                 role: res.data.user.role
                             });
+                            localStorage.setItem('accessToken', res.data.user.access);
                             navigate('/dashboard/default');
                         } else {
                             console.log(res);

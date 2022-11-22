@@ -28,7 +28,7 @@ const Dashboard = () => {
 
     return (
         <Grid container spacing={gridSpacing}>
-            <Grid item xs={12}>
+            <Grid item xs={12} >
                 <Grid container spacing={gridSpacing}>
                     <Grid item lg={4} md={6} sm={6} xs={12}>
                         <EarningCard isLoading={isLoading} />
@@ -38,10 +38,10 @@ const Dashboard = () => {
                     </Grid>
                     <Grid item lg={4} md={12} sm={12} xs={12}>
                         <Grid container spacing={gridSpacing}>
-                            <Grid item sm={6} xs={12} md={6} lg={12}>
+                            <Grid item sm={8} xs={12} md={6} lg={12}>
                                 <TotalIncomeDarkCard isLoading={isLoading} />
                             </Grid>
-                            <Grid item sm={6} xs={12} md={6} lg={12}>
+                            <Grid item sm={4} xs={12} md={6} lg={12}>
                                 <TotalIncomeLightCard isLoading={isLoading} />
                             </Grid>
                         </Grid>

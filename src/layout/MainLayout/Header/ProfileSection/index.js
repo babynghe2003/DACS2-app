@@ -68,6 +68,7 @@ const ProfileSection = () => {
             refreshToken: '',
             role: 'auth'
         });
+        localStorage.removeItem('accessToken');
         navigate('/pages/login/login3');
     };
 

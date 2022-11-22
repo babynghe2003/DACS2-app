@@ -38,11 +38,11 @@ const CreateTopic = (props) => {
     const [values, setValues] = useState({ tittle: '', body: '' });
     const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
     const customization = useSelector((state) => state.customization);
-    // useEffect(() => {
-    //     console.log(theme);
-    //     console.log(editorState.getCurrentContent());
-    //     console.log(convertToRaw(editorState.getCurrentContent()));
-    // }, [editorState]);
+    useEffect(() => {
+        // console.log(theme);
+        // console.log(editorState.getCurrentContent());
+        console.log(convertToRaw(editorState.getCurrentContent()));
+    }, [editorState]);
 
     const handleChange = (key, e) => {
         switch (key) {

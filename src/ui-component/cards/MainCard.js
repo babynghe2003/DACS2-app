@@ -24,6 +24,8 @@ const MainCard = forwardRef(
             darkTitle,
             secondary,
             shadow,
+            headerAction = true,
+            action,
             sx = {},
             title,
             ...others
@@ -70,7 +72,9 @@ MainCard.propTypes = {
     border: PropTypes.bool,
     boxShadow: PropTypes.bool,
     children: PropTypes.node,
+    action: PropTypes.node,
     content: PropTypes.bool,
+    headerAction: PropTypes.bool,
     contentClass: PropTypes.string,
     contentSX: PropTypes.object,
     darkTitle: PropTypes.bool,

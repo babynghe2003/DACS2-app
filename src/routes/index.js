@@ -11,22 +11,22 @@ import { useEffect, useState } from 'react';
 
 export default function ThemeRoutes() {
     const userInfo = useSelector((state) => state.userInfo);
-    const [role, setRole] = useState(AuthenticationRoutes);
+    const [role, setRole] = useState([AuthenticationRoutes]);
 
     useEffect(() => {
         switch (userInfo.role) {
             case 'auth':
-                setRole(AuthenticationRoutes);
+                setRole([AuthenticationRoutes]);
                 break;
             case 'admin':
-                setRole(MainRoutes);
+                setRole([MainRoutes, UserRoutes]);
                 break;
             case 'user':
-                setRole(UserRoutes);
+                setRole([UserRoutes]);
                 break;
             default:
                 break;
         }
-    }, [userInfo.role]);
-    return useRoutes([role]);
+    }, [userInfo.role, localStorage]);
+    return useRoutes(role);
 }

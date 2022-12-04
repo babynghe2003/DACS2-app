@@ -10,10 +10,12 @@ import { element } from 'prop-types';
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
 const HomeDefault = Loadable(lazy(() => import('views/home/Default')));
 const CreateTopic = Loadable(lazy(() => import('views/home/CreateTopic')));
-const CreateBlog = Loadable(lazy(() => import('views/home/CreateBlog')));
+const Topic = Loadable(lazy(() => import('views/home/Topic')));
 const TagsDefault = Loadable(lazy(() => import('views/tags/Default')));
 const UserDefault = Loadable(lazy(() => import('views/users/Default')));
-
+const Blog = Loadable(lazy(() => import('views/blog/Default')));
+const EditTopic = Loadable(lazy(() => import('views/home/EditTopic')));
+const User = Loadable(lazy(() => import('views/users/User')));
 // utilities routing
 const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')));
 const UtilsColor = Loadable(lazy(() => import('views/utilities/Color')));
@@ -46,11 +48,16 @@ const UserRoutes = {
                     element: <CreateTopic />
                 },
                 {
-                    path: 'createblog',
-                    element: <CreateBlog />
+                    path: 'topic',
+                    element: <Topic />
+                },
+                {
+                    path: 'edit-topic',
+                    element: <EditTopic />
                 }
             ]
         },
+
         {
             path: 'tags',
             children: [
@@ -68,12 +75,8 @@ const UserRoutes = {
                     element: <UserDefault />
                 },
                 {
-                    path: 'createtopic',
-                    element: <CreateTopic />
-                },
-                {
-                    path: 'createblog',
-                    element: <CreateBlog />
+                    path: 'user',
+                    element: <User />
                 }
             ]
         },

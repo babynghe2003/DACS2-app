@@ -2,11 +2,11 @@
 
 const chartData = {
     type: 'line',
-    height: 90,
+    height: 200,
     options: {
         chart: {
             sparkline: {
-                enabled: true
+                enabled: false
             }
         },
         dataLabels: {
@@ -21,17 +21,13 @@ const chartData = {
             curve: 'smooth',
             width: 3
         },
-        yaxis: {
-            min: 0,
-            max: 100
-        },
         tooltip: {
             theme: 'dark',
             fixed: {
                 enabled: false
             },
             x: {
-                show: false
+                show: true
             },
             y: {
                 title: 'Total Order'
@@ -41,12 +37,26 @@ const chartData = {
             }
         }
     },
-    series: [
-        {
-            name: 'series1',
-            data: [45, 66, 41, 89, 25, 44, 9, 54]
+    // series: [
+    //     {
+    //         data: [
+    //             {
+    //                 x: 'apple',
+    //                 y: 76
+    //             },
+    //             {
+    //                 x: 'noway',
+    //                 y: 23
+    //             }
+    //         ]
+    //     }
+    // ],
+    xaxis: {
+        type: 'category',
+        crosshairs: {
+            width: 1
         }
-    ]
+    }
 };
 
 export default chartData;

@@ -24,9 +24,14 @@ const AuthenticationRoutes = {
             element: <AuthRegister3 />
         },
         {
-            path: '*',
+            path: '/',
 
             element: <Navigate to="/pages/login/login3" replace />
+        },
+        {
+            path: '*',
+
+            element: <Navigate to="/" replace />
         }
     ]
 };

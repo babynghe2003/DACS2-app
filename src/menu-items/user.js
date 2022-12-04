@@ -17,30 +17,6 @@ const dashboard = {
             breadcrumbs: false
         },
         {
-            id: 'topic',
-            title: 'CreateTopic',
-            type: 'item',
-            url: '/home/createtopic',
-            icon: IconDashboard,
-            breadcrumbs: false
-        },
-        {
-            id: 'blog',
-            title: 'CreateBlog',
-            type: 'item',
-            url: '/home/createblog',
-            icon: IconDashboard,
-            breadcrumbs: false
-        },
-        {
-            id: 'tags',
-            title: 'Tags',
-            type: 'item',
-            url: '/tags/default',
-            icon: IconTags,
-            breadcrumbs: false
-        },
-        {
             id: 'users',
             title: 'Users',
             type: 'item',

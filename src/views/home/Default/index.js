@@ -28,9 +28,9 @@ const Default = () => {
                         <Grid item xs={12}>
                             <UserCard isLoading={isLoading} />
                         </Grid>
-                        <Grid item xs={12}>
+                        {/* <Grid item xs={12}>
                             <BlogCard isLoading={isLoading} />
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                 </Grid>
             </Grid>

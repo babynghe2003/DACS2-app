@@ -10,6 +10,9 @@ export const LoginAPI = (data) => {
 };
 
 export const MeAPI = () => {
-    console.log(localStorage.getItem('accessToken'));
-    return Server.get('/auth/me');
+    return Server.get('/auth/me', { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
+};
+
+export const getProfileAPI = (id) => {
+    return Server.get('/auth/profile/' + id, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
 };

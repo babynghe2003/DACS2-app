@@ -6,7 +6,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import { useSelector } from 'react-redux';
 import { CreateTopicAPI } from 'api/TopicApi';
-
+import { AllTopicAPI, GetTopic, UpdateTopic } from 'api/TopicApi';
 import { useTheme } from '@mui/material/styles';
 import {
     Box,
@@ -36,28 +36,56 @@ import { Edit } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
 const CreateTopic = (props) => {
+    const [isLoading, setLoading] = useState(true);
+    useEffect(() => {
+        setLoading(false);
+    }, []);
     const theme = useTheme();
     const customization = useSelector((state) => state.customization);
     const navigate = useNavigate();
+
+    const getIDTopic = () => {
+        const id = new URLSearchParams(location.search).get('id');
+        console.log('id' + id);
+        return new URLSearchParams(location.search).get('id');
+    };
+
+    const [topicCr, setTopicCr] = useState(null);
+    const [bodyCr, setBodyCr] = useState(() => EditorState.createEmpty());
+    useEffect(() => {
+        console.log('id = ' + getIDTopic());
+        const getTopic = async () => {
+            const res = await GetTopic(getIDTopic());
+            if (res.status === 200) {
+                setLoading(false);
+                console.log(res.data);
+                setTopicCr(res.data);
+                setBodyCr(EditorState.createWithContent(convertFromRaw(res.data.topic.body)));
+            }
+        };
+        getTopic();
+    }, []);
 
     return (
         <>
             <Formik
                 initialValues={{
-                    title: '',
-                    body: EditorState.createEmpty()
+                    title: topicCr?.topic.title,
+                    body: bodyCr
                 }}
                 validationSchema={Yup.object().shape({
                     title: Yup.string().max(200).required('Title is required')
                 })}
+                enableReinitialize={true}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
-                        const res = await CreateTopicAPI({
-                            title: values.title,
+                        console.log(topicCr.id);
+                        const res = await UpdateTopic(topicCr.topic.id, {
+                            tittle: values.title,
                             body: convertToRaw(values.body.getCurrentContent())
                         });
-                        if (res.status == 201) {
-                            alert('Da tao thanh cong mot topic!!');
+                        if (res.status == 200) {
+                            alert('Updated!!');
                             navigate('/dashboard/default');
                         } else {
                         }
@@ -90,16 +118,7 @@ const CreateTopic = (props) => {
                                 <Typography variant="subtitle1">Title</Typography>
                             </Box>
                             <FormControl fullWidth sx={{ ...theme.typography.customInput }}>
-                                <InputLabel htmlFor="title-field">Title</InputLabel>
-                                <OutlinedInput
-                                    id="title-field"
-                                    type="text"
-                                    value={values.title}
-                                    name="title"
-                                    onChange={handleChange}
-                                    label="Title"
-                                    inputProps={{}}
-                                />
+                                <OutlinedInput type="text" value={values.title} name="title" onChange={handleChange} inputProps={{}} />
                             </FormControl>
                         </div>
 
@@ -142,7 +161,7 @@ const CreateTopic = (props) => {
                                     variant="contained"
                                     color="secondary"
                                 >
-                                    Review your question
+                                    Update Topic
                                 </Button>
                             </AnimateButton>
                         </Box>

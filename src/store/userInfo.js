@@ -5,7 +5,8 @@ export const userInfo = {
     username: '',
     email: '',
     refreshToken: '',
-    role: ''
+    role: '',
+    id: ''
 };
 
 const UserInfo = (state = userInfo, action) => {
@@ -18,7 +19,8 @@ const UserInfo = (state = userInfo, action) => {
                 username: action.username,
                 refreshToken: action.refreshToken,
                 email: action.email,
-                role: action.role
+                role: action.role,
+                id: action.id
             };
         default:
             return state;

@@ -50,8 +50,6 @@ const FirebaseLogin = ({ ...others }) => {
     const setUser = useSelector((state) => state.userInfo);
     const [checked, setChecked] = useState(true);
 
-    console.log(setUser.role);
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -146,14 +144,14 @@ const FirebaseLogin = ({ ...others }) => {
                             password: values.password
                         });
                         if (res.status == 200) {
-                            console.log(res);
                             dispatch({
                                 type: SET_USER,
                                 accessToken: res.data.user.access,
                                 username: res.data.user.username,
                                 email: res.data.user.email,
                                 refreshToken: res.data.user.refresh,
-                                role: res.data.user.role
+                                role: res.data.user.role,
+                                id: res.data.user.id
                             });
                             localStorage.setItem('accessToken', res.data.user.access);
                             navigate('/dashboard/default');

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
@@ -33,7 +33,6 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import Transitions from 'ui-component/extended/Transitions';
-import UpgradePlanCard from './UpgradePlanCard';
 import User1 from 'assets/images/users/user-round.svg';
 
 import { SET_USER } from 'store/actions';
@@ -66,7 +65,8 @@ const ProfileSection = () => {
             username: '',
             email: '',
             refreshToken: '',
-            role: 'auth'
+            role: 'auth',
+            id: ''
         });
         localStorage.removeItem('accessToken');
         navigate('/pages/login/login3');
@@ -197,7 +197,6 @@ const ProfileSection = () => {
                                     </Box>
                                     <PerfectScrollbar style={{ height: '100%', maxHeight: 'calc(100vh - 250px)', overflowX: 'hidden' }}>
                                         <Box sx={{ p: 2 }}>
-                                            <UpgradePlanCard />
                                             <Divider />
                                             <Card
                                                 sx={{
@@ -261,7 +260,7 @@ const ProfileSection = () => {
                                                 <ListItemButton
                                                     sx={{ borderRadius: `${customization.borderRadius}px` }}
                                                     selected={selectedIndex === 0}
-                                                    onClick={(event) => handleListItemClick(event, 0, '/user/account-profile/profile1')}
+                                                    onClick={(event) => handleListItemClick(event, 0, '/users/default?id=' + userInfo.id)}
                                                 >
                                                     <ListItemIcon>
                                                         <IconSettings stroke={1.5} size="1.3rem" />
@@ -271,7 +270,7 @@ const ProfileSection = () => {
                                                 <ListItemButton
                                                     sx={{ borderRadius: `${customization.borderRadius}px` }}
                                                     selected={selectedIndex === 1}
-                                                    onClick={(event) => handleListItemClick(event, 1, '/user/social-profile/posts')}
+                                                    onClick={(event) => handleListItemClick(event, 1, '/users/default')}
                                                 >
                                                     <ListItemIcon>
                                                         <IconUser stroke={1.5} size="1.3rem" />

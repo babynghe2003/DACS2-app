@@ -1,20 +1,18 @@
-import PropTypes from 'prop-types';
 import User1 from 'assets/images/users/avt.png';
-import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 // material-ui
-import { useTheme } from '@mui/material/styles';
 import { Avatar, Button, CardActions, CardContent, Divider, Grid, Menu, MenuItem, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 // project imports
-import MainCard from 'ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
+import MainCard from 'ui-component/cards/MainCard';
 
 // assets
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
-import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
-import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 
 //api
 import { AllUserAPI } from 'api/DashBoardAPI';
@@ -24,6 +22,8 @@ const UserCard = ({ isLoading }) => {
     const theme = useTheme();
 
     const [anchorEl, setAnchorEl] = useState(null);
+
+    const [view, setView] = useState(true);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -92,7 +92,7 @@ const UserCard = ({ isLoading }) => {
                             </Grid>
                         </Grid>
                         <Grid item xs={12}>
-                            {usersData?.map((user) => {
+                            {usersData?.slice(0, view ? 5 : usersData.length).map((user) => {
                                 return (
                                     <>
                                         <Grid container direction="column">
@@ -122,8 +122,8 @@ const UserCard = ({ isLoading }) => {
                     </Grid>
                 </CardContent>
                 <CardActions sx={{ p: 1.25, pt: 0, justifyContent: 'center' }}>
-                    <Button size="small" disableElevation>
-                        View All
+                    <Button size="small" disableElevation onClick={(e) => setView(!view)}>
+                        {view ? 'View All' : 'View Less'}
                         <ChevronRightOutlinedIcon />
                     </Button>
                 </CardActions>

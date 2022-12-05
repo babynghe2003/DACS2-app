@@ -1,11 +1,6 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { useTheme } from '@mui/material/styles';
-import { AllTopicAPI } from 'api/TopicApi';
-import { MeAPI } from 'api/UserApi';
+import { useEffect, useState } from 'react';
 
 import TopicCard from './TopicCard';
-import BlogCard from './BlogCard';
 import UserCard from './UserCard';
 
 import { Grid } from '@mui/material';

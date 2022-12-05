@@ -33,3 +33,7 @@ export const UpdateTopic = (id, data) => {
 export const VoteTopicAPI = (data) => {
     return Server.post('/topics/vote', data, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
 };
+
+export const VoteCommentAPI = (data) => {
+    return Server.post('/topics/vote-comment', data, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
+};

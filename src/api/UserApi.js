@@ -16,3 +16,7 @@ export const MeAPI = () => {
 export const getProfileAPI = (id) => {
     return Server.get('/auth/profile/' + id, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
 };
+
+export const updateProfile = (data) => {
+    return Server.patch('/auth/update-profile', data, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
+};

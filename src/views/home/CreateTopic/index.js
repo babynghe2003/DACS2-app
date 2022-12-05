@@ -1,39 +1,19 @@
-import React, { useState, useEffect } from 'react';
-
-import { EditorState, convertToRaw, convertFromRaw, ContentBlock } from 'draft-js';
+import { convertToRaw, EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
-import { useSelector } from 'react-redux';
 import { CreateTopicAPI } from 'api/TopicApi';
+import { useSelector } from 'react-redux';
 
+import { Box, Button, FormControl, InputLabel, OutlinedInput, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import {
-    Box,
-    Button,
-    Checkbox,
-    Divider,
-    FormControl,
-    FormControlLabel,
-    FormHelperText,
-    Grid,
-    IconButton,
-    InputAdornment,
-    InputLabel,
-    OutlinedInput,
-    Stack,
-    Typography,
-    useMediaQuery,
-    TextareaAutosize
-} from '@mui/material';
 
 import AnimateButton from 'ui-component/extended/AnimateButton';
 
 // third party
-import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { Edit } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
 
 const CreateTopic = (props) => {
     const theme = useTheme();

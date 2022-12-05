@@ -2,38 +2,21 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 // material-ui
+import { Button, ButtonGroup, CardActions, CardContent, CardHeader, Divider, Grid, Menu, MenuItem, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import {
-    Avatar,
-    Button,
-    ButtonGroup,
-    CardActions,
-    CardContent,
-    Divider,
-    Grid,
-    Menu,
-    MenuItem,
-    Typography,
-    CardHeader
-} from '@mui/material';
 import { Link } from 'react-router-dom';
 // project imports
-import MainCard from 'ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
+import MainCard from 'ui-component/cards/MainCard';
 
 // assets
-import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
-import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import { MoreVertOutlined } from '@mui/icons-material';
-import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
-import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
+import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
+import MuiTypography from '@mui/material/Typography';
 import AnimateButton from 'ui-component/extended/AnimateButton';
-
 // api
-import { AllTopicAPI, MyTopicAPI, DeleteTopic } from 'api/TopicApi';
-import { convertFromRaw } from 'draft-js';
+import { AllTopicAPI, DeleteTopic, MyTopicAPI } from 'api/TopicApi';
 import { useNavigate } from 'react-router-dom';
-import { color } from '@mui/system';
 
 // ==============================|| HOME DEFAULT - TOPIC CARD ||============================== //
 
@@ -134,6 +117,8 @@ const TopicCard = ({ isLoading }) => {
         if (d > 0) return Math.floor(d / 1000) + ' seconds';
     };
 
+    const [view, setView] = useState(true);
+
     return (
         <>
             <MainCard content={true} darkTitle={false}>
@@ -141,7 +126,7 @@ const TopicCard = ({ isLoading }) => {
                 <CardContent>
                     <Grid container spacing={gridSpacing}>
                         <Grid item xs={12}>
-                            <Grid container alignContent="center" justifyContent="space-between">
+                            <Grid container alignContent="center" justifyContent="space-between" spacing={1}>
                                 <Grid item>
                                     <ButtonGroup variant="contained" color="inherit">
                                         <Button
@@ -179,13 +164,31 @@ const TopicCard = ({ isLoading }) => {
                                 </Grid>
                             </Grid>
                         </Grid>
+
                         <Grid item xs={12}>
+                            {topics.length == 0 ? (
+                                <Grid item>
+                                    <MuiTypography
+                                        sx={{
+                                            textAlign: 'center',
+                                            color: theme.palette.grey[500]
+                                        }}
+                                        variant="h3"
+                                        gutterBottom
+                                    >
+                                        No topic founded, let create one....
+                                    </MuiTypography>
+                                </Grid>
+                            ) : (
+                                ''
+                            )}
                             {topics
                                 ?.sort((a, b) => {
                                     if (filter == 2) {
                                         return b.likes + b.answers - (a.likes + a.answers);
                                     } else return getdate(a.create_at) - getdate(b.create_at);
                                 })
+                                .slice(0, view ? 10 : topics.length)
                                 .map((topic) => {
                                     return (
                                         <>
@@ -195,10 +198,10 @@ const TopicCard = ({ isLoading }) => {
                                                         <Grid item>
                                                             <Typography
                                                                 variant="h5"
+                                                                color={topic.likes >= 0 ? 'inherit' : 'red'}
                                                                 sx={{
                                                                     m: 1,
-                                                                    fontWeight: 100,
-                                                                    color: theme.palette.success
+                                                                    fontWeight: 100
                                                                 }}
                                                             >
                                                                 {topic.likes} votes
@@ -226,7 +229,7 @@ const TopicCard = ({ isLoading }) => {
                                                                 mb: 1
                                                             }}
                                                         >
-                                                            <Grid container justifyContent="space-between">
+                                                            <Grid container justifyContent="space-between" direction="row">
                                                                 <Grid item>
                                                                     <Typography
                                                                         variant="h3"
@@ -355,8 +358,8 @@ const TopicCard = ({ isLoading }) => {
                     </Grid>
                 </CardContent>
                 <CardActions sx={{ p: 1.25, pt: 0, justifyContent: 'center' }}>
-                    <Button size="small" disableElevation>
-                        View All
+                    <Button size="small" disableElevation onClick={(e) => setView(!view)}>
+                        {view ? 'View All' : 'View Less'}
                         <ChevronRightOutlinedIcon />
                     </Button>
                 </CardActions>

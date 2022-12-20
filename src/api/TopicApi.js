@@ -1,7 +1,7 @@
 import Server from './Server';
 
 export const AllTopicAPI = () => {
-    return Server.get('/topics/all-topics');
+    return Server.get('/topics/all-topics', { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
 };
 
 export const MyTopicAPI = () => {
@@ -30,10 +30,30 @@ export const UpdateTopic = (id, data) => {
     });
 };
 
-export const VoteTopicAPI = (data) => {
-    return Server.post('/topics/vote', data, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
+export const LikeTopic = (id) => {
+    return Server.post('/topics/like-topic/' + id, {}, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
 };
 
-export const VoteCommentAPI = (data) => {
-    return Server.post('/topics/vote-comment', data, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
+export const DislikeTopic = (id) => {
+    return Server.post('/topics/dislike-topic/' + id, {}, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
+};
+
+export const LikeComment = (id) => {
+    return Server.post('/topics/like-comment/' + id, {}, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
+};
+
+export const DislikeComment = (id) => {
+    return Server.post(
+        '/topics/dislike-comment/' + id,
+        {},
+        { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
+    );
+};
+
+export const SearchTopic = (value) => {
+    return Server.get('/topics/search?keyword=' + value);
+};
+
+export const ReportTopic = (id) => {
+    return Server.post('/topics/report-topic/' + id, {}, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
 };

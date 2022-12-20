@@ -11,5 +11,5 @@ export const userMenu = {
 };
 
 export const adminMenu = {
-    items: [admin, other, utilities, other]
+    items: [admin, other]
 };

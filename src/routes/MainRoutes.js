@@ -8,6 +8,16 @@ import { Navigate } from 'react-router-dom';
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
 
+const HomeDefault = Loadable(lazy(() => import('views/home/Default')));
+const CreateTopic = Loadable(lazy(() => import('views/home/CreateTopic')));
+const Topic = Loadable(lazy(() => import('views/home/Topic')));
+const TagsDefault = Loadable(lazy(() => import('views/tags/Default')));
+const UserDefault = Loadable(lazy(() => import('views/users/Default')));
+const Blog = Loadable(lazy(() => import('views/blog/Default')));
+const EditTopic = Loadable(lazy(() => import('views/home/EditTopic')));
+const User = Loadable(lazy(() => import('views/users/User')));
+const SearchTopic = Loadable(lazy(() => import('views/home/SearchTopic')));
+
 // utilities routing
 const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')));
 const UtilsColor = Loadable(lazy(() => import('views/utilities/Color')));
@@ -25,7 +35,7 @@ const MainRoutes = {
     element: <MainLayout />,
     children: [
         {
-            path: '*',
+            path: '/',
             element: <Navigate to="/dashboard/default" replace />
         },
         {
@@ -46,6 +56,46 @@ const MainRoutes = {
                 }
             ]
         },
+        {
+            path: 'home',
+            children: [
+                {
+                    path: 'default',
+                    element: <HomeDefault />
+                },
+                {
+                    path: 'createtopic',
+                    element: <CreateTopic />
+                },
+                {
+                    path: 'topic',
+                    element: <Topic />
+                },
+                {
+                    path: 'edit-topic',
+                    element: <EditTopic />
+                },
+                {
+                    path: 'search-topic',
+                    element: <SearchTopic />
+                }
+            ]
+        },
+
+        {
+            path: 'users',
+            children: [
+                {
+                    path: 'default',
+                    element: <UserDefault />
+                },
+                {
+                    path: 'user',
+                    element: <User />
+                }
+            ]
+        },
+
         {
             path: 'utils',
             children: [

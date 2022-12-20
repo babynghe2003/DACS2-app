@@ -15,7 +15,7 @@ import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import MuiTypography from '@mui/material/Typography';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 // api
-import { AllTopicAPI, DeleteTopic, MyTopicAPI, ReportTopic, SearchTopic } from 'api/TopicApi';
+import { AllTopicAPI, DeleteTopic, MyTopicAPI, SearchTopic } from 'api/TopicApi';
 import { useNavigate } from 'react-router-dom';
 
 // ==============================|| HOME DEFAULT - TOPIC CARD ||============================== //
@@ -31,11 +31,6 @@ const TopicCard = ({ isLoading }) => {
 
     const handleChangeFilter = (id) => {
         setFilter(id);
-    };
-
-    const getKeywordParam = () => {
-        const keyword = new URLSearchParams(location.search).get('keyword');
-        return new URLSearchParams(location.search).get('keyword');
     };
 
     const handleAsk = () => {
@@ -58,13 +53,8 @@ const TopicCard = ({ isLoading }) => {
         setMoreAction(null);
     };
 
-    const reportTopic = async (id) => {
-        const res = await ReportTopic(id);
-        console.log(res);
-        if (res.status == 200) {
-            alert('Reported');
-            setLod(true);
-        }
+    const getKeyword = () => {
+        return new URLSearchParams(location.search).get('keyword');
     };
 
     const handleActionTopic = (event, action = 0, id = '') => {
@@ -76,7 +66,6 @@ const TopicCard = ({ isLoading }) => {
                 deleteTopic(id);
                 break;
             case 3:
-                reportTopic(id);
                 break;
             case 4:
                 break;
@@ -90,24 +79,16 @@ const TopicCard = ({ isLoading }) => {
 
     useEffect(() => {
         const getTopics = async () => {
-            if (getKeywordParam() != null) {
-                const res = await SearchTopic(getKeywordParam());
-                if (res.status == 200) setTopic(res.data.data);
-            } else if (filter == 3) {
-                const res = await MyTopicAPI();
-                if (res.status === 200) setTopic(res.data.data);
-                console.log(res);
-            } else {
-                const res = await AllTopicAPI();
-                if (res.status === 200) setTopic(res.data.data);
-                console.log(res);
-            }
+            const res = await SearchTopic({
+                keyword: getKeyword()
+            });
+            if (res.status === 200) setTopic(res.data.data);
+            console.log(res);
         };
-        console.log(getKeywordParam());
         console.log('getReport');
         getTopics();
         setLod(false);
-    }, [filter, islod, getKeywordParam()]);
+    }, [filter, islod]);
 
     const demotext = (topic) => {
         const value = topic.body.blocks
@@ -165,14 +146,6 @@ const TopicCard = ({ isLoading }) => {
                                         >
                                             Most Popular
                                         </Button>
-                                        <Button
-                                            onClick={(e) => handleChangeFilter(3)}
-                                            sx={{
-                                                backgroundColor: filter == 3 ? theme.palette.grey[500] : theme.palette.grey[200]
-                                            }}
-                                        >
-                                            Me
-                                        </Button>
                                     </ButtonGroup>
                                 </Grid>
                                 <Grid item>
@@ -211,7 +184,7 @@ const TopicCard = ({ isLoading }) => {
                                 .slice(0, view ? 10 : topics.length)
                                 .map((topic) => {
                                     return (
-                                        <div key={topic.id}>
+                                        <>
                                             <Grid container spacing={2} key={topic.id}>
                                                 <Grid item xs={2}>
                                                     <Grid container direction="column" alignItems="flex-end" justifyContent="center">
@@ -301,7 +274,7 @@ const TopicCard = ({ isLoading }) => {
                                                                         }}
                                                                     >
                                                                         {topic.author_id == userInfo.id || userInfo.role == 'admin' ? (
-                                                                            <div>
+                                                                            <>
                                                                                 <MenuItem
                                                                                     onClick={(e) => handleActionTopic(e, 1, topic.id)}
                                                                                 >
@@ -314,9 +287,9 @@ const TopicCard = ({ isLoading }) => {
                                                                                     {' '}
                                                                                     Delete
                                                                                 </MenuItem>
-                                                                            </div>
+                                                                            </>
                                                                         ) : (
-                                                                            <div>
+                                                                            <>
                                                                                 <MenuItem
                                                                                     onClick={(e) => handleActionTopic(e, 3, topic.id)}
                                                                                 >
@@ -329,7 +302,7 @@ const TopicCard = ({ isLoading }) => {
                                                                                     {' '}
                                                                                     Block
                                                                                 </MenuItem>
-                                                                            </div>
+                                                                            </>
                                                                         )}
                                                                     </Menu>
                                                                 </Grid>
@@ -371,7 +344,7 @@ const TopicCard = ({ isLoading }) => {
                                             </Grid>
 
                                             <Divider sx={{ my: 1.5 }} />
-                                        </div>
+                                        </>
                                     );
                                 })}
                         </Grid>

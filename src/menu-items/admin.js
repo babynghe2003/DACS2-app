@@ -23,7 +23,7 @@ const dashboard = {
             id: 'topic',
             title: 'Topic',
             type: 'item',
-            url: '/dashboard/topic',
+            url: '/home/default',
             icon: icons.IconHomeQuestion,
             breadcrumbs: false
         }

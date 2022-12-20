@@ -136,7 +136,7 @@ const ProfileSection = () => {
                         color="inherit"
                     />
                 }
-                label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.primary.main} />}
+                label={<IconSettings stroke={1.5} size="24px" color={theme.palette.primary.main} />}
                 variant="outlined"
                 ref={anchorRef}
                 aria-controls={open ? 'menu-list-grow' : undefined}
@@ -185,7 +185,7 @@ const ProfileSection = () => {
                                             placeholder="Search profile options"
                                             startAdornment={
                                                 <InputAdornment position="start">
-                                                    <IconSearch stroke={1.5} size="1rem" color={theme.palette.grey[500]} />
+                                                    <IconSearch stroke={1.5} size="16px" color={theme.palette.grey[500]} />
                                                 </InputAdornment>
                                             }
                                             aria-describedby="search-helper-text"
@@ -263,7 +263,7 @@ const ProfileSection = () => {
                                                     onClick={(event) => handleListItemClick(event, 0, '/users/user?id=' + userInfo.id)}
                                                 >
                                                     <ListItemIcon>
-                                                        <IconSettings stroke={1.5} size="1.3rem" />
+                                                        <IconSettings stroke={1.5} size="20.8px" />
                                                     </ListItemIcon>
                                                     <ListItemText primary={<Typography variant="body2">Account Settings</Typography>} />
                                                 </ListItemButton>
@@ -273,7 +273,7 @@ const ProfileSection = () => {
                                                     onClick={(event) => handleListItemClick(event, 1, '/users/default')}
                                                 >
                                                     <ListItemIcon>
-                                                        <IconUser stroke={1.5} size="1.3rem" />
+                                                        <IconUser stroke={1.5} size="20.8px" />
                                                     </ListItemIcon>
                                                     <ListItemText
                                                         primary={
@@ -301,7 +301,7 @@ const ProfileSection = () => {
                                                     onClick={handleLogout}
                                                 >
                                                     <ListItemIcon>
-                                                        <IconLogout stroke={1.5} size="1.3rem" />
+                                                        <IconLogout stroke={1.5} size="20.8px" />
                                                     </ListItemIcon>
                                                     <ListItemText primary={<Typography variant="body2">Logout</Typography>} />
                                                 </ListItemButton>

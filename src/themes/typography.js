@@ -17,7 +17,7 @@ export default function themeTypography(theme) {
             fontWeight: 500
         },
         h4: {
-            fontSize: '1rem',
+            fontSize: '16px',
             color: theme.heading,
             fontWeight: 600
         },
@@ -27,7 +27,7 @@ export default function themeTypography(theme) {
             fontWeight: 600
         },
         h2: {
-            fontSize: '1.5rem',
+            fontSize: '24px',
             color: theme.heading,
             fontWeight: 700
         },
@@ -117,17 +117,17 @@ export default function themeTypography(theme) {
         smallAvatar: {
             width: '22px',
             height: '22px',
-            fontSize: '1rem'
+            fontSize: '16px'
         },
         mediumAvatar: {
             width: '34px',
             height: '34px',
-            fontSize: '1.2rem'
+            fontSize: '19.2px'
         },
         largeAvatar: {
             width: '44px',
             height: '44px',
-            fontSize: '1.5rem'
+            fontSize: '24px'
         }
     };
 }

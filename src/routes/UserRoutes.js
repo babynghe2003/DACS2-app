@@ -16,6 +16,7 @@ const UserDefault = Loadable(lazy(() => import('views/users/Default')));
 const Blog = Loadable(lazy(() => import('views/blog/Default')));
 const EditTopic = Loadable(lazy(() => import('views/home/EditTopic')));
 const User = Loadable(lazy(() => import('views/users/User')));
+const SearchTopic = Loadable(lazy(() => import('views/home/SearchTopic')));
 // utilities routing
 const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')));
 const UtilsColor = Loadable(lazy(() => import('views/utilities/Color')));
@@ -54,6 +55,10 @@ const UserRoutes = {
                 {
                     path: 'edit-topic',
                     element: <EditTopic />
+                },
+                {
+                    path: 'search-topic',
+                    element: <SearchTopic />
                 }
             ]
         },

@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 
 // third party
-import { updateProfile } from 'api/UserApi';
+import { updateProfile, updatePassword } from 'api/UserApi';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 
@@ -150,6 +150,120 @@ const EditProfile = ({ userData }) => {
                     </form>
                 )}
             </Formik>
+            {isOwn() ? (
+                <Formik
+                    initialValues={{
+                        oldPassword: '',
+                        newPassword: '',
+                        confirmPassword: ''
+                    }}
+                    onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+                        if (values.newPassword != values.confirmPassword) {
+                            alert('Password not match');
+                        } else {
+                            try {
+                                const res = await updatePassword({
+                                    old_password: values.oldPassword,
+                                    new_password: values.newPassword
+                                });
+                                if (res.status == 200) {
+                                    alert('Updated!!');
+                                } else {
+                                }
+                                if (scriptedRef.current) {
+                                    setStatus({ success: true });
+                                    setSubmitting(false);
+                                }
+                            } catch (error) {
+                                console.error(error);
+                                if (scriptedRef.current) {
+                                    setStatus({ success: false });
+                                    setErrors({ submit: err.message });
+                                    setSubmitting(false);
+                                }
+                            }
+                        }
+                    }}
+                >
+                    {({
+                        values,
+                        touched,
+                        dirty,
+                        errors,
+                        handleChange,
+                        handleBlur,
+                        handleSubmit,
+                        handleReset,
+                        setFieldValue,
+                        isSubmitting
+                    }) => (
+                        <form noValidate onSubmit={handleSubmit}>
+                            <div
+                                sx={{
+                                    backgroundColor: theme.palette.background.paper,
+                                    border: '1px solid black',
+                                    borderColor: theme.palette.grey[400],
+                                    borderRadius: `${customization.borderRadius}px`,
+                                    padding: '10px'
+                                }}
+                            >
+                                <Box sx={{ my: 1 }}>
+                                    <Typography variant="subtitle1">Old Password</Typography>
+                                </Box>
+                                <FormControl fullWidth sx={{ ...theme.typography.customInput }}>
+                                    <OutlinedInput
+                                        type="password"
+                                        value={values.oldPassword}
+                                        name="oldPassword"
+                                        onChange={handleChange}
+                                        inputProps={{}}
+                                    />
+                                </FormControl>
+                                <Box sx={{ my: 1 }}>
+                                    <Typography variant="subtitle1">New Password</Typography>
+                                </Box>
+                                <FormControl fullWidth sx={{ ...theme.typography.customInput }}>
+                                    <OutlinedInput
+                                        type="password"
+                                        value={values.newPassword}
+                                        name="newPassword"
+                                        onChange={handleChange}
+                                        inputProps={{}}
+                                    />
+                                </FormControl>
+                                <Box sx={{ my: 1 }}>
+                                    <Typography variant="subtitle1">Confirm Password</Typography>
+                                </Box>
+                                <FormControl fullWidth sx={{ ...theme.typography.customInput }}>
+                                    <OutlinedInput
+                                        type="password"
+                                        value={values.confirmPassword}
+                                        name="confirmPassword"
+                                        onChange={handleChange}
+                                        inputProps={{}}
+                                    />
+                                </FormControl>
+                            </div>
+                            <Box sx={{ mt: 2 }}>
+                                <AnimateButton>
+                                    <Button
+                                        disableElevation
+                                        disabled={isSubmitting}
+                                        size="large"
+                                        type="submit"
+                                        variant="contained"
+                                        color="secondary"
+                                    >
+                                        Save
+                                    </Button>
+                                </AnimateButton>
+                            </Box>
+                        </form>
+                    )}
+                </Formik>
+            ) : (
+                ''
+            )}
         </>
     );
 };

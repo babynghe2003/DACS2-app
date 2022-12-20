@@ -59,7 +59,7 @@ const OtherTopics = ({ userData }) => {
                 </Grid>
                 <CardActions sx={{ p: 1.25, pt: 0, justifyContent: 'center' }}>
                     <Button size="small" disableElevation onClick={(e) => setView(!view)}>
-                        {view ? 'View All' : 'View Less'}
+                        {view ? 'View More' : 'View Less'}
                         <ChevronRightOutlinedIcon />
                     </Button>
                 </CardActions>

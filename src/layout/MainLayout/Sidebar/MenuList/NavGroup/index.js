@@ -30,7 +30,7 @@ const NavGroup = ({ item }) => {
     });
 
     return (
-        <>
+        <div key="nav-group">
             <List
                 subheader={
                     item.title && (
@@ -50,7 +50,7 @@ const NavGroup = ({ item }) => {
 
             {/* group divider */}
             <Divider sx={{ mt: 0.25, mb: 1.25 }} />
-        </>
+        </div>
     );
 };
 

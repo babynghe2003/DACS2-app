@@ -38,7 +38,7 @@ const CreateTopic = (props) => {
                         });
                         if (res.status == 201) {
                             alert('Da tao thanh cong mot topic!!');
-                            navigate('/dashboard/default');
+                            navigate('/home/default');
                         } else {
                         }
                         if (scriptedRef.current) {

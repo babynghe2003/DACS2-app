@@ -20,3 +20,7 @@ export const getProfileAPI = (id) => {
 export const updateProfile = (data) => {
     return Server.patch('/auth/update-profile', data, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
 };
+
+export const updatePassword = (data) => {
+    return Server.patch('/auth/change-password', data, { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } });
+};

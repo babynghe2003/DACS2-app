@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useLayoutEffect } from 'react';
 
 // material-ui
 import { Box, Button, CardContent, CardHeader, Divider, FormControl, Grid, OutlinedInput, Tooltip, Typography } from '@mui/material';
@@ -14,7 +14,7 @@ import ArrowDropUpRoundedIcon from '@mui/icons-material/ArrowDropUpRounded';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 
 // api
-import { CommentAPI, GetTopic, VoteCommentAPI, VoteTopicAPI } from 'api/TopicApi';
+import { CommentAPI, GetTopic, LikeTopic, DislikeTopic, LikeComment, DislikeComment } from 'api/TopicApi';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { convertFromRaw, EditorState } from 'draft-js';
@@ -64,7 +64,7 @@ const TopicCard = () => {
     const [topicCr, setTopicCr] = useState(null);
     const [bodyCr, setBodyCr] = useState(() => EditorState.createEmpty());
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const getTopic = async () => {
             const res = await GetTopic(getIDTopic());
             if (res.status === 200) {
@@ -75,7 +75,7 @@ const TopicCard = () => {
             }
         };
         getTopic();
-    }, [isLoading]);
+    }, [isLoading, new URLSearchParams(location.search).get('id')]);
 
     const toDayTime = (dt) => {
         var now = new Date();
@@ -90,40 +90,28 @@ const TopicCard = () => {
     };
 
     const handleLikeTopic = async () => {
-        const res = await VoteTopicAPI({
-            topic_id: getIDTopic(),
-            vote_action: 1
-        });
+        const res = await LikeTopic(topicCr.topic.id);
         if (res.status == 200) {
             setLoading(true);
         }
     };
 
     const handleDislikeTopic = async () => {
-        const res = await VoteTopicAPI({
-            topic_id: getIDTopic(),
-            vote_action: 2
-        });
+        const res = await DislikeTopic(topicCr.topic.id);
         if (res.status == 200) {
             setLoading(true);
         }
     };
 
     const handleLikeComment = async (id) => {
-        const res = await VoteCommentAPI({
-            comment_id: id,
-            vote_action: 1
-        });
+        const res = await LikeComment(id);
         if (res.status == 200) {
             setLoading(true);
         }
     };
 
     const handleDisLikeComment = async (id) => {
-        const res = await VoteCommentAPI({
-            comment_id: id,
-            vote_action: 2
-        });
+        const res = await DislikeComment(id);
         if (res.status == 200) {
             setLoading(true);
         }
@@ -169,7 +157,7 @@ const TopicCard = () => {
                                         <Typography variant="subtitle2">At {topicCr?.topic.create_at} by</Typography>
                                         <Typography
                                             component={Link}
-                                            to={'/users/user?id=' + topicCr?.topic.user.username}
+                                            to={'/users/user?id=' + topicCr?.topic.user.id}
                                             variant="subtitle2"
                                             sx={{ color: 'Highlight', textDecoration: 'none' }}
                                         >
@@ -186,7 +174,7 @@ const TopicCard = () => {
                                             <Tooltip title="Like" placement="left-start">
                                                 <Button
                                                     sx={{
-                                                        width: '1rem',
+                                                        width: '16px',
                                                         height: '2rem'
                                                     }}
                                                     onClick={handleLikeTopic}
@@ -194,6 +182,7 @@ const TopicCard = () => {
                                                     <ArrowDropUpRoundedIcon
                                                         color="action"
                                                         sx={{
+                                                            color: topicCr?.topic.is_like == 1 ? 'Highlight' : 'action',
                                                             cursor: 'pointer',
                                                             fontSize: '6rem'
                                                         }}
@@ -203,9 +192,9 @@ const TopicCard = () => {
                                         </Grid>
                                         <Grid item>
                                             <Typography
-                                                color={topicCr?.topic.likes > 0 ? 'inherit' : 'red'}
+                                                color={topicCr?.topic.likes >= 0 ? 'inherit' : 'red'}
                                                 sx={{
-                                                    fontSize: '1.5rem'
+                                                    fontSize: '24px'
                                                 }}
                                             >
                                                 {topicCr?.topic.likes}
@@ -215,7 +204,7 @@ const TopicCard = () => {
                                             <Tooltip title="Dislike" placement="left-start">
                                                 <Button
                                                     sx={{
-                                                        width: '1rem',
+                                                        width: '16px',
                                                         height: '2rem'
                                                     }}
                                                     onClick={handleDislikeTopic}
@@ -223,6 +212,7 @@ const TopicCard = () => {
                                                     <ArrowDropDownRoundedIcon
                                                         color="action"
                                                         sx={{
+                                                            color: topicCr?.topic.is_like == 2 ? 'Highlight' : 'action',
                                                             cursor: 'pointer',
                                                             fontSize: '6rem'
                                                         }}
@@ -249,7 +239,7 @@ const TopicCard = () => {
                             <Divider sx={{ my: 1.5 }} />
                             <Typography
                                 sx={{
-                                    fontSize: '1.5rem',
+                                    fontSize: '24px',
                                     fontWeight: '600',
                                     my: 1
                                 }}
@@ -268,13 +258,14 @@ const TopicCard = () => {
                                                             <Button
                                                                 onClick={(e) => handleLikeComment(comment.id)}
                                                                 sx={{
-                                                                    width: '1rem',
+                                                                    width: '16px',
                                                                     height: '2rem'
                                                                 }}
                                                             >
                                                                 <ArrowDropUpRoundedIcon
                                                                     color="action"
                                                                     sx={{
+                                                                        color: comment.is_like == 1 ? 'Highlight' : 'action',
                                                                         cursor: 'pointer',
                                                                         fontSize: '4rem',
                                                                         mb: -1
@@ -286,7 +277,7 @@ const TopicCard = () => {
                                                     <Grid item>
                                                         <Typography
                                                             sx={{
-                                                                fontSize: '1.5rem'
+                                                                fontSize: '24px'
                                                             }}
                                                         >
                                                             {comment?.likes}
@@ -297,13 +288,14 @@ const TopicCard = () => {
                                                             <Button
                                                                 onClick={(e) => handleDisLikeComment(comment.id)}
                                                                 sx={{
-                                                                    width: '1rem',
+                                                                    width: '16px',
                                                                     height: '2rem'
                                                                 }}
                                                             >
                                                                 <ArrowDropDownRoundedIcon
                                                                     color="action"
                                                                     sx={{
+                                                                        color: comment.is_like == 2 ? 'Highlight' : 'action',
                                                                         cursor: 'pointer',
                                                                         fontSize: '4rem',
                                                                         mt: -1
@@ -320,7 +312,8 @@ const TopicCard = () => {
                                                         <Typography
                                                             variant="subtitle2"
                                                             sx={{
-                                                                fontSize: '1.2rem'
+                                                                fontSize: '16px',
+                                                                mt: 3
                                                             }}
                                                             color="inherit"
                                                         >
@@ -356,7 +349,7 @@ const TopicCard = () => {
                             })}
                             <Typography
                                 sx={{
-                                    fontSize: '1.5rem',
+                                    fontSize: '24px',
                                     fontWeight: '600',
                                     my: 1
                                 }}

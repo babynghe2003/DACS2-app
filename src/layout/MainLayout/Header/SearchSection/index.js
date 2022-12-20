@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // material-ui
 import { useTheme, styled } from '@mui/material/styles';
@@ -7,7 +7,7 @@ import { Avatar, Box, ButtonBase, Card, Grid, InputAdornment, OutlinedInput, Pop
 
 // third-party
 import PopupState, { bindPopper, bindToggle } from 'material-ui-popup-state';
-
+import { useNavigate } from 'react-router-dom';
 // project imports
 import Transitions from 'ui-component/extended/Transitions';
 
@@ -58,7 +58,7 @@ const HeaderAvatarStyle = styled(Avatar, { shouldForwardProp })(({ theme }) => (
 
 // ==============================|| SEARCH INPUT - MOBILE||============================== //
 
-const MobileSearch = ({ value, setValue, popupState }) => {
+const MobileSearch = ({ value, setValue, popupState, handleKeyDown }) => {
     const theme = useTheme();
 
     return (
@@ -69,14 +69,14 @@ const MobileSearch = ({ value, setValue, popupState }) => {
             placeholder="Search"
             startAdornment={
                 <InputAdornment position="start">
-                    <IconSearch stroke={1.5} size="1rem" color={theme.palette.grey[500]} />
+                    <IconSearch stroke={1.5} size="16px" color={theme.palette.grey[500]} />
                 </InputAdornment>
             }
             endAdornment={
                 <InputAdornment position="end">
                     <ButtonBase sx={{ borderRadius: '12px' }}>
                         <HeaderAvatarStyle variant="rounded">
-                            <IconAdjustmentsHorizontal stroke={1.5} size="1.3rem" />
+                            <IconAdjustmentsHorizontal stroke={1.5} size="20.8px" />
                         </HeaderAvatarStyle>
                     </ButtonBase>
                     <Box sx={{ ml: 2 }}>
@@ -95,7 +95,7 @@ const MobileSearch = ({ value, setValue, popupState }) => {
                                 }}
                                 {...bindToggle(popupState)}
                             >
-                                <IconX stroke={1.5} size="1.3rem" />
+                                <IconX stroke={1.5} size="20.8px" />
                             </Avatar>
                         </ButtonBase>
                     </Box>
@@ -110,6 +110,7 @@ const MobileSearch = ({ value, setValue, popupState }) => {
 MobileSearch.propTypes = {
     value: PropTypes.string,
     setValue: PropTypes.func,
+    handleKeyDown: PropTypes.func,
     popupState: PopupState
 };
 
@@ -118,6 +119,22 @@ MobileSearch.propTypes = {
 const SearchSection = () => {
     const theme = useTheme();
     const [value, setValue] = useState('');
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        //console.log(value);
+    }, [value]);
+
+    const handleKeyDown = (e) => {
+        if (e.key == 'Enter') {
+            console.log('do validate');
+            if (value !== '') {
+                navigate('/home/default?keyword=' + value, { replace: true });
+            } else {
+                navigate('/home/default', { replace: true });
+            }
+        }
+    };
 
     return (
         <>
@@ -128,7 +145,7 @@ const SearchSection = () => {
                             <Box sx={{ ml: 2 }}>
                                 <ButtonBase sx={{ borderRadius: '12px' }}>
                                     <HeaderAvatarStyle variant="rounded" {...bindToggle(popupState)}>
-                                        <IconSearch stroke={1.5} size="1.2rem" />
+                                        <IconSearch stroke={1.5} size="19.2px" />
                                     </HeaderAvatarStyle>
                                 </ButtonBase>
                             </Box>
@@ -148,7 +165,12 @@ const SearchSection = () => {
                                                 <Box sx={{ p: 2 }}>
                                                     <Grid container alignItems="center" justifyContent="space-between">
                                                         <Grid item xs>
-                                                            <MobileSearch value={value} setValue={setValue} popupState={popupState} />
+                                                            <MobileSearch
+                                                                handleKeyDown={handleKeyDown}
+                                                                value={value}
+                                                                setValue={setValue}
+                                                                popupState={popupState}
+                                                            />
                                                         </Grid>
                                                     </Grid>
                                                 </Box>
@@ -169,20 +191,20 @@ const SearchSection = () => {
                     placeholder="Search"
                     startAdornment={
                         <InputAdornment position="start">
-                            <IconSearch stroke={1.5} size="1rem" color={theme.palette.grey[500]} />
+                            <IconSearch stroke={1.5} size="16px" color={theme.palette.grey[500]} />
                         </InputAdornment>
                     }
                     endAdornment={
                         <InputAdornment position="end">
                             <ButtonBase sx={{ borderRadius: '12px' }}>
                                 <HeaderAvatarStyle variant="rounded">
-                                    <IconAdjustmentsHorizontal stroke={1.5} size="1.3rem" />
+                                    <IconAdjustmentsHorizontal stroke={1.5} size="20.8px" />
                                 </HeaderAvatarStyle>
                             </ButtonBase>
                         </InputAdornment>
                     }
                     aria-describedby="search-helper-text"
-                    inputProps={{ 'aria-label': 'weight' }}
+                    inputProps={{ 'aria-label': 'weight', onKeyDown: handleKeyDown }}
                 />
             </Box>
         </>

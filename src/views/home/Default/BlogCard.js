@@ -286,7 +286,7 @@ const BlogCard = ({ isLoading }) => {
                 </CardContent>
                 <CardActions sx={{ p: 1.25, pt: 0, justifyContent: 'center' }}>
                     <Button size="small" disableElevation>
-                        View All
+                        View More
                         <ChevronRightOutlinedIcon />
                     </Button>
                 </CardActions>

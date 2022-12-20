@@ -19,7 +19,7 @@ export default function ThemeRoutes() {
                 setRole([AuthenticationRoutes]);
                 break;
             case 'admin':
-                setRole([MainRoutes, UserRoutes]);
+                setRole([MainRoutes]);
                 break;
             case 'user':
                 setRole([UserRoutes]);

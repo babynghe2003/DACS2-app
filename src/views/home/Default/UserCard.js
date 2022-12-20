@@ -94,7 +94,7 @@ const UserCard = ({ isLoading }) => {
                         <Grid item xs={12}>
                             {usersData?.slice(0, view ? 5 : usersData.length).map((user) => {
                                 return (
-                                    <>
+                                    <div key={user.id}>
                                         <Grid container direction="column">
                                             <Grid item>
                                                 <Grid container alignItems="center" justifyContent="space-between">
@@ -115,7 +115,7 @@ const UserCard = ({ isLoading }) => {
                                             </Grid>
                                         </Grid>
                                         <Divider sx={{ my: 1.5 }} />
-                                    </>
+                                    </div>
                                 );
                             })}
                         </Grid>
@@ -123,7 +123,7 @@ const UserCard = ({ isLoading }) => {
                 </CardContent>
                 <CardActions sx={{ p: 1.25, pt: 0, justifyContent: 'center' }}>
                     <Button size="small" disableElevation onClick={(e) => setView(!view)}>
-                        {view ? 'View All' : 'View Less'}
+                        {view ? 'View More' : 'View Less'}
                         <ChevronRightOutlinedIcon />
                     </Button>
                 </CardActions>
